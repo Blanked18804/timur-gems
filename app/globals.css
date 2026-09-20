@@ -1,26 +1,189 @@
 @import "tailwindcss";
 
+/* Brand colors and design tokens */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f3e8;
+  --foreground: #29231d;
+
+  --gold: #b59a52;
+  --gold-light: #d0b873;
+  --gold-dark: #8f7638;
+
+  --cream: #eee7d7;
+  --charcoal: #211d18;
+  --muted: #766e61;
+  --border: #ded5c2;
+  --white: #ffffff;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--gold);
+  --color-primary-hover: var(--gold-dark);
+  --color-secondary: var(--cream);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-dark: var(--charcoal);
+  --color-white: var(--white);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: Georgia, "Times New Roman", serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+
+  --color-cream: var(--cream);
+  --color-charcoal: var(--charcoal);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-white: var(--white);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+
+  --color-text: #e5e5e5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--white);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold-light);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Minimal utility helpers */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.text-gold {
+  color: var(--gold);
+}
+
+.bg-gold {
+  background-color: var(--gold);
+}
+
+.bg-cream {
+  background-color: var(--cream);
+}
+
+.bg-charcoal {
+  background-color: var(--charcoal);
+}
+
+.border-gold {
+  border-color: var(--gold);
+}
+
+.gold-line {
+  width: 100%;
+  height: 1px;
+  background: var(--gold);
+}
+
+.gold-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--gold);
+}
+
+.gold-divider::before,
+.gold-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--gold);
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+.btn{
+  padding: 8px 16px;
+  background-color: var(--gold);
+  color: var(--background);
+  border: 2px solid var(--gold);
+}
+
+.btn-secondary{
+  padding: 8px 16px;
+  background-color: var(--background);
+  color: var(--gold);
+  border: 2px solid var(--border);
 }

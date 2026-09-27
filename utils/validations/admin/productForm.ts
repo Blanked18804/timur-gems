@@ -1,6 +1,6 @@
 import {z} from "zod";
 
-const productEditFormSchema = z.object({
+const productDescriptionFormSchema = z.object({
   name: z.string().min(1, "Product name is required"),
   stone_type: z.string().min(1, "Stone type is required"),
   color: z.string().min(1, "Color is required"),
@@ -10,5 +10,10 @@ const productEditFormSchema = z.object({
   description: z.string().optional(),
 });
 
-export type ProductEditFormSchema = z.infer<typeof productEditFormSchema>
-export default productEditFormSchema;
+const productImagesInfoFormSchema = z.object({
+  alt_text: z.string().min(1, "Alt text is required"),
+  sort_order: z.number().positive().min(0).max(5),
+})
+
+export type ProductDescriptionFormSchema = z.infer<typeof productDescriptionFormSchema>
+export default productDescriptionFormSchema;

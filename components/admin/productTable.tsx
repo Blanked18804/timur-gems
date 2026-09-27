@@ -3,7 +3,7 @@ import { DeleteIcon, Edit, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function ProductTable({products}: ProductWithImages) {
+export default function ProductTable({products}: {products: ProductWithImages}) {
   return (
     <div className='w-full overflow-x-auto border border-border'>
       <table className='w-full text-sm'>
@@ -39,7 +39,7 @@ export default function ProductTable({products}: ProductWithImages) {
                 <td className="px-4 py-4 text-muted-foreground">{product.stone_type}</td>
                 <td className="px-4 py-4">{product.color}</td>
                 <td className="px-4 py-4">{product.price}</td>
-                <td className="px-4 py-4">{product.discount_price ? `Rs. ${product.discount_price}` : "-" }</td>
+                <td className="px-4 py-4">{product.discounted_price ? `Rs. ${product.discounted_price}` : "-" }</td>
                 <td className="px-4 py-4">{product.stock_quantity}</td>
                 <td className="px-4 py-4">
                   <div className='flex gap-8 items-center'>

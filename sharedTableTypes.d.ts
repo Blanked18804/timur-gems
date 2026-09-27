@@ -8,18 +8,16 @@ export interface Product {
   stone_type: string;
   shape: string;
   color: string;
-  weight: number | null; // carats
 
   // Gemstone characteristics
   origin: string | null;
 
   // Pricing
   price: number;
-  discount_price: number | null;
+  discounted_price: number | null;
 
   // Inventory
   stock_quantity: number;
-  is_available: boolean;
 
   // Storefront
   is_featured: boolean;

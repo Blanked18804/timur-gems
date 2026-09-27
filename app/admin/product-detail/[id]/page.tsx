@@ -1,4 +1,5 @@
-import ProductEditForm from '@/components/admin/productEditForm';
+import PageLayout from '@/components/admin/pageLayout';
+import ProductForm from '@/components/admin/productForm';
 import { fetchProductById } from '@/utils/actions/products.action'
 import Image from 'next/image'
 
@@ -6,7 +7,13 @@ export default async function ProductDetail({params}: {params: Promise<{id: stri
     const {id} = await params;
     console.log(id);
     const product = await fetchProductById(id);
+
   return (
-    <ProductEditForm product={product} />
+    <PageLayout>
+      <section className='w-full'>
+        <h1 className='text-4xl font-semibold'>Edit Product</h1>
+        <ProductForm product={product} />
+      </section>
+    </PageLayout>
   )
 }

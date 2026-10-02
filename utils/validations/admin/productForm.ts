@@ -1,19 +1,24 @@
 import {z} from "zod";
 
-const productDescriptionFormSchema = z.object({
-  name: z.string().min(1, "Product name is required"),
-  stone_type: z.string().min(1, "Stone type is required"),
-  color: z.string().min(1, "Color is required"),
-  price: z.number().positive("Price must be greater than 0"),
-  discount_price: z.number().min(0).optional(),
-  stock_quantity: z.number().int().min(0),
+const productFormSchema = z.object({
+  name: z.string().trim().min(1, "Product name is required"),
+  stone_type: z.string().trim().min(1, "Stone type is required"),
+  color: z.string().trim().min(1, "Color is required"),
+  shape: z.string().trim().min(1, "Shape is required"),
+  origin: z.string().trim().nullable().optional(),
+  price: z.coerce.number().positive("Price must be greater than 0"),
+  discounted_price: z.coerce.number().min(0, "Discounted price cannot be negative").optional(),
+  stock_quantity: z.coerce.number().int("Stockquantity must be a whole number").min(0, "Stock quantity cannot be negative"),
+  isFeatured: z.boolean(),
   description: z.string().optional(),
-});
+}).refine(
+  (data) => 
+    data.discounted_price === undefined || data.discounted_price <= data.price,
+  {
+    message: "Discounted price cannot be greater than the original price",
+    path: ["discounted_price"]
+  }
+)
 
-const productImagesInfoFormSchema = z.object({
-  alt_text: z.string().min(1, "Alt text is required"),
-  sort_order: z.number().positive().min(0).max(5),
-})
-
-export type ProductDescriptionFormSchema = z.infer<typeof productDescriptionFormSchema>
-export default productDescriptionFormSchema;
+export type ProductFormSchema = z.infer<typeof productFormSchema>
+export default productFormSchema;

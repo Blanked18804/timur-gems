@@ -10,7 +10,7 @@ export default async function ProductDetail({params}: {params: Promise<{id: stri
 
   return (
     <PageLayout>
-      <section className='w-full'>
+      <section className='pt-8 w-full flex flex-col gap-8'>
         <h1 className='text-4xl font-semibold'>Edit Product</h1>
         <ProductForm product={product} />
       </section>

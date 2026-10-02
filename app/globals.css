@@ -170,3 +170,23 @@ img {
   color: var(--gold);
   border: 2px solid var(--border);
 }
+
+/* for input */
+input,
+textarea,
+select {
+  border: 1.5px solid var(--border);
+  background-color: white;
+  padding: 4px 16px;
+  color: #111827;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: var(--gold);
+}

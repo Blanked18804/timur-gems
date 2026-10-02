@@ -10,33 +10,20 @@ create table public.products (
   -- Gemstone information
   stone_type text not null,
   shape text not null,
-  cut text not null,
   color text not null,
-  weight numeric(10, 2),
-
-  -- Dimensions (mm)
-  length_mm numeric(10, 2),
-  width_mm numeric(10, 2),
-  height_mm numeric(10, 2),
 
   -- Gemstone characteristics
-  clarity text,
   origin text,
-  treatment text,
-  hardness numeric(3, 1),
-  is_natural boolean not null default true,
 
   -- Pricing
   price numeric(12, 2) not null,
-  discount_price numeric(12, 2),
+  discounted_price numeric(12, 2),
 
   -- Inventory
   stock_quantity integer not null default 1,
-  is_available boolean not null default true,
 
   -- Storefront
   is_featured boolean not null default false,
-  is_active boolean not null default true,
 
   -- Timestamps
   created_at timestamptz not null default now(),
@@ -61,26 +48,6 @@ create table public.products (
   constraint products_stock_non_negative
     check (stock_quantity >= 0),
 
-  constraint products_weight_positive
-    check (
-      weight is null
-      or weight > 0
-    ),
-
-  constraint products_dimensions_positive
-    check (
-      (length_mm is null or length_mm > 0)
-      and
-      (width_mm is null or width_mm > 0)
-      and
-      (height_mm is null or height_mm > 0)
-    ),
-
-  constraint products_hardness_valid
-    check (
-      hardness is null
-      or (hardness >= 0 and hardness <= 10)
-    )
 );
 
 

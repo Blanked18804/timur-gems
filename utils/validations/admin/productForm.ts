@@ -9,7 +9,7 @@ const productFormSchema = z.object({
   price: z.coerce.number().positive("Price must be greater than 0"),
   discounted_price: z.coerce.number().min(0, "Discounted price cannot be negative").optional(),
   stock_quantity: z.coerce.number().int("Stockquantity must be a whole number").min(0, "Stock quantity cannot be negative"),
-  isFeatured: z.boolean(),
+  is_featured: z.boolean(),
   description: z.string().optional(),
 }).refine(
   (data) => 

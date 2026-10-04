@@ -1,5 +1,5 @@
 // for filtering products
-interface FetchProductsOptions{
+interface FetchProductsOptions {
     is_featured?: boolean;
     stone_type?: string;
     color?: string;
@@ -7,19 +7,11 @@ interface FetchProductsOptions{
     is_available?: boolean;
 }
 
-type ExistingImage = {
-    id: string;
-    image_url: string;
-    alt_text: string | null;
-    sort_order: number;
-    is_primary: boolean;
-}
-
-type NewImage = {
-    id: string;
-    file: File
+// for new images for products
+interface ProductImageInput {
+    file: File;
     preview: string;
-    alt_text: string | null;
+    alt_text: string;
     sort_order: number;
     is_primary: boolean;
-}
+};

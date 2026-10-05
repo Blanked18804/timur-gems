@@ -4,7 +4,7 @@ create table public.products (
 
   -- Basic information
   name text not null,
-  slug text not null unique,
+  -- slug text not null unique,
   description text,
 
   -- Gemstone information

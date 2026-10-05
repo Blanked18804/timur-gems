@@ -4,7 +4,6 @@ import { addProduct } from '@/utils/actions/products.action';
 import productFormSchema, { ProductFormSchema } from '@/utils/validations/admin/productForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Trash } from 'lucide-react';
-import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -57,6 +56,8 @@ export default function ProductForm() {
             ...currentimages,
             ...newImages,
         ]);
+
+        // event.target.value = "";
     }
 
     const handleRemoveImage = (index: number) => {
@@ -77,11 +78,10 @@ export default function ProductForm() {
             if (imageToRemove.is_primary && remainingImages.length > 0) {
                 remainingImages[0].is_primary = true;
             }
-
-            setSelectImageError("");
-
             return remainingImages;
         });
+
+        setSelectImageError("");
     };
 
     const handleAltTextChange = (index: number, altText: string) => {
@@ -275,8 +275,8 @@ export default function ProductForm() {
                     {/* make it option of either true or false */}
                     <div className="flex flex-col gap-2 w-1/2">
                         <label className="font-semibold">Is Featured</label>
-                        <input type="text" {...form.register("is_featured")} />
-
+                        {/* <input type="text" {...form.register("is_featured")} /> */}
+                        <input type="radio" {...form.register("is_featured")} />
                         {form.formState.errors.is_featured && (
                             <p className='text-sm text-red-500'>{form.formState.errors.is_featured.message}</p>
                         )}
@@ -292,8 +292,8 @@ export default function ProductForm() {
                     </div>
 
                     <div className='flex gap-2 ml-auto'>
-                        <button className='btn-secondary'>Cancel</button>
-                        <button className='btn' type='submit'>Add Product</button>
+                        <button type='button' className='btn-secondary'>Cancel</button>
+                        <button type='submit' className='btn'>Add Product</button>
                     </div>
                 </div>
             </div>

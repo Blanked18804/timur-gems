@@ -2,6 +2,8 @@
 
 import { ProductWithImages } from "@/sharedTableTypes";
 import { createClient } from "../supabase/server";
+import { file } from "zod";
+import { metadata } from "@/app/layout";
 
 // returns all products info
 export async function fetchProducts(option: FetchProductsOptions = {}
@@ -55,6 +57,55 @@ export async function fetchProductById(id: string): Promise<ProductWithImages | 
 
 export async function addProduct(formData: FormData) {
     const productData = JSON.parse(formData.get("product") as string);
+    const images = formData.getAll("images") as File[];
+    const imageMetadata = JSON.parse(formData.get("imageMetadata") as string) as {
+        alt_text: string;
+        sort_order: string;
+        is_primary: boolean;
+    }[];
 
     console.log(productData);
+
+    const supabase = await createClient();
+
+    const { data: product, error } = await supabase.from("products").insert(productData).select().single();
+
+    if (error) {
+        console.error("Failed to create the product");
+        throw new Error("Failed to create the product");
+    }
+
+    for (let i = 0; i < images.length; i++) {
+        const image = images[i];
+        const metadata = imageMetadata[i];
+
+        const filepath = `${crypto.randomUUID()}-${image.name}`;
+
+        const { data, error } = await supabase.storage.from("product-images").upload(filepath, image);
+
+        if (error) {
+            console.error("Failed to create the product");
+            throw new Error("Failed to create the product");
+        }
+
+        const { data: publicUrlData } = supabase.storage.from("product-images").getPublicUrl(data.path);
+
+        const { error: imageError } = await supabase.from("product_images").insert({
+            product_id: product.id,
+            image_url: publicUrlData.publicUrl,
+            alt_text: metadata.alt_text,
+            sort_order: metadata.sort_order,
+            is_primary: metadata.is_primary,
+        });
+
+        if (imageError) {
+            console.error("Failed to save image information:", imageError);
+            throw new Error("Failed to save image information");
+        }
+    }
+
+    console.log("created product", product);
+
+    return product;
+
 }

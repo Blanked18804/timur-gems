@@ -71,9 +71,11 @@ export async function addProduct(formData: FormData) {
     const { data: product, error } = await supabase.from("products").insert(productData).select().single();
 
     if (error) {
-        console.error("Failed to create the product");
-        throw new Error("Failed to create the product");
+        console.error("Product insert error: ", error);
+        throw new Error(error.message);
     }
+
+    console.log("product created: ", product)
 
     for (let i = 0; i < images.length; i++) {
         const image = images[i];
@@ -84,9 +86,11 @@ export async function addProduct(formData: FormData) {
         const { data, error } = await supabase.storage.from("product-images").upload(filepath, image);
 
         if (error) {
-            console.error("Failed to create the product");
-            throw new Error("Failed to create the product");
+            console.error("Image upload error: ", error);
+            throw new Error(error.message);
         }
+
+        console.log("image added to bucket: ", data);
 
         const { data: publicUrlData } = supabase.storage.from("product-images").getPublicUrl(data.path);
 
@@ -102,6 +106,8 @@ export async function addProduct(formData: FormData) {
             console.error("Failed to save image information:", imageError);
             throw new Error("Failed to save image information");
         }
+
+        console.log("image added to the product_images table")
     }
 
     console.log("created product", product);

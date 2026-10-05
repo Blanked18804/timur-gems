@@ -26,6 +26,7 @@ export default function ProductForm() {
 
     const [images, setImages] = useState<ProductImageInput[]>([]);
     const [selectImageError, setSelectImageError] = useState("");
+    const [loading, setLoading] = useState(false)
     const maxImages = 4;
 
     const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,8 +36,6 @@ export default function ProductForm() {
             setSelectImageError(`You can upload maximum of ${maxImages} images`)
             return;
         }
-
-        console.log((files))
 
         const newImages: ProductImageInput[] = files.map((file, index) => {
             return (
@@ -104,21 +103,27 @@ export default function ProductForm() {
     };
 
     const handleSubmit = async (data: ProductFormSchema) => {
-        const formData = new FormData();
+        setLoading(true);
 
-        formData.append("product", JSON.stringify(data));
+        try {
+            const formData = new FormData();
 
-        images.forEach((image) => {
-            formData.append("images", image.file);
-        });
+            formData.append("product", JSON.stringify(data));
 
-        formData.append("imageMetadata", JSON.stringify(images.map((image) => ({
-            alt_text: image.alt_text,
-            sort_order: image.sort_order,
-            is_primary: image.is_primary,
-        }))))
+            images.forEach((image) => {
+                formData.append("images", image.file);
+            });
 
-        await addProduct(formData);
+            formData.append("imageMetadata", JSON.stringify(images.map((image) => ({
+                alt_text: image.alt_text,
+                sort_order: image.sort_order,
+                is_primary: image.is_primary,
+            }))))
+
+            await addProduct(formData);
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -292,8 +297,8 @@ export default function ProductForm() {
                     </div>
 
                     <div className='flex gap-2 ml-auto'>
-                        <button type='button' className='btn-secondary'>Cancel</button>
-                        <button type='submit' className='btn'>Add Product</button>
+                        <button type='button' disabled={loading} className={`btn-secondary`}>Cancel</button>
+                        <button type='submit' disabled={loading} className='btn'>{loading ? "Adding Product..." : "Add Product"}</button>
                     </div>
                 </div>
             </div>

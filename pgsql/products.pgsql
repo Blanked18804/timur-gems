@@ -1,3 +1,26 @@
+-- STONE TYPES
+create table public.stone_types (
+  id uuid primary key default gen_random_uuid(),
+  name text not null unique,
+  created_at timestamptz not null default now()
+);
+
+
+-- SHAPES
+create table public.shapes (
+  id uuid primary key default gen_random_uuid(),
+  name text not null unique,
+  created_at timestamptz not null default now()
+);
+
+
+-- COLORS
+create table public.colors (
+  id uuid primary key default gen_random_uuid(),
+  name text not null unique,
+  created_at timestamptz not null default now()
+);
+
 -- PRODUCTS TABLE
 create table public.products (
   id uuid primary key default gen_random_uuid(),
@@ -33,16 +56,16 @@ create table public.products (
   constraint products_price_positive
     check (price >= 0),
 
-  constraint products_discount_positive
+  constraint products_discounted_positive
     check (
-      discount_price is null
-      or discount_price >= 0
+      discounted_price is null
+      or discounted_price >= 0
     ),
 
-  constraint products_discount_less_than_price
+  constraint products_discounted_less_than_price
     check (
-      discount_price is null
-      or discount_price < price
+      discounted_price is null
+      or discounted_price < price
     ),
 
   constraint products_stock_non_negative
@@ -119,3 +142,38 @@ create trigger products_updated_at
 before update on public.products
 for each row
 execute function public.update_updated_at();
+
+-- Changes i made later
+alter table public.products
+add column stone_type_id uuid,
+add column shape_id uuid,
+add column color_id uuid;
+
+alter table public.products
+alter column stone_type_id set not null,
+alter column shape_id set not null,
+alter column color_id set not null;
+
+alter table public.products
+add constraint products_stone_type_id_fkey
+foreign key (stone_type_id)
+references public.stone_types(id)
+on delete restrict;
+
+alter table public.products
+add constraint products_shape_id_fkey
+foreign key (shape_id)
+references public.shapes(id)
+on delete restrict;
+
+alter table public.products
+add constraint products_color_id_fkey
+foreign key (color_id)
+references public.colors(id)
+on delete restrict;
+
+-- Remove old text columns
+alter table public.products
+  drop column stone_type,
+  drop column shape,
+  drop column color;

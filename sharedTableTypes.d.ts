@@ -42,3 +42,10 @@ export interface ProductImage {
 export interface ProductWithImages extends Product{
     product_images: ProductImage[];
 }
+
+// for category table
+type ProductCategory = {
+  id: string;
+  name: string;
+  created_at: string;
+};

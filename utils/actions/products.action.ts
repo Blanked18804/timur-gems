@@ -2,8 +2,6 @@
 
 import { ProductWithImages } from "@/sharedTableTypes";
 import { createClient } from "../supabase/server";
-import { file } from "zod";
-import { metadata } from "@/app/layout";
 
 // returns all products info
 export async function fetchProducts(option: FetchProductsOptions = {}
@@ -75,7 +73,7 @@ export async function addProduct(formData: FormData) {
         throw new Error(error.message);
     }
 
-    console.log("product created: ", product)
+    console.log("product created: ", product) // remove at the end
 
     for (let i = 0; i < images.length; i++) {
         const image = images[i];
@@ -90,7 +88,7 @@ export async function addProduct(formData: FormData) {
             throw new Error(error.message);
         }
 
-        console.log("image added to bucket: ", data);
+        console.log("image added to bucket: ", data); // remove at the end
 
         const { data: publicUrlData } = supabase.storage.from("product-images").getPublicUrl(data.path);
 
@@ -107,10 +105,10 @@ export async function addProduct(formData: FormData) {
             throw new Error("Failed to save image information");
         }
 
-        console.log("image added to the product_images table")
+        console.log("image added to the product_images table") // remove at the end
     }
 
-    console.log("created product", product);
+    console.log("created product", product); // remove at the end
 
     return product;
 

@@ -159,6 +159,7 @@ img {
 
 button{
   font-weight: 500;
+  cursor: pointer;
 }
 
 .btn{
@@ -186,6 +187,15 @@ button{
   background-color: var(--gold);
   color: white;
   border: 2px solid var(--gold);
+}
+
+.btn-disabled{
+  padding: 8px 16px;
+  background-color: white;
+  color: var(--gold);
+  border: 2px solid var(--border);
+  cursor: no-drop;
+  transition: 300ms;
 }
 
 /* for input */

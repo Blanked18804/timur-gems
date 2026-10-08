@@ -1,12 +1,12 @@
 import { ProductWithImages } from '@/sharedTableTypes'
-import { DeleteIcon, Edit, Trash } from 'lucide-react'
+import { Edit, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function ProductTable({products}: {products: ProductWithImages}) {
   return (
     <div className='w-full overflow-x-auto border border-border'>
-      <table className='w-full text-sm'>
+      <table className='w-full table-fixed text-sm'>
         <thead className='border-b border-border'>
           <tr className='text-left'>
             <th className="w-12 px-4 py-3">

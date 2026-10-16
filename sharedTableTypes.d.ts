@@ -5,9 +5,9 @@ export interface Product {
   description: string | null;
 
   // Gemstone information
-  stone_type: string;
-  shape: string;
-  color: string;
+  stone_type_id: string;
+  shape_id: string;
+  color_id: string;
 
   // Gemstone characteristics
   origin: string | null;
@@ -39,13 +39,16 @@ export interface ProductImage {
   created_at: string;
 }
 
-export interface ProductWithImages extends Product{
-    product_images: ProductImage[];
-}
-
 // for category table
 type ProductCategory = {
   id: string;
   name: string;
   created_at: string;
 };
+
+export interface ProductWithImages extends Product{
+    product_images: ProductImage[];
+    stone_types: Pick<ProductCategory, "id" | "name"> | null
+    shapes: Pick<ProductCategory, "id" | "name"> | null
+    colors: Pick<ProductCategory, "id" | "name"> | null
+}

@@ -11,9 +11,9 @@ export default async function Categories() {
   return (
     <PageLayout>
         <section className='pr-16 w-full my-16 flex flex-col gap-16'>
-          <CategoriesTableForm categories={stoneTypes} name={"Stone Types"} />
-          <CategoriesTableForm categories={shapes} name={"Shapes"} />
-          <CategoriesTableForm categories={colors} name={"Colors"} />
+          <CategoriesTableForm category={"stone_types"} categories={stoneTypes} name={"Stone Types"} />
+          <CategoriesTableForm category={"shapes"} categories={shapes} name={"Shapes"} />
+          <CategoriesTableForm category={"colors"} categories={colors} name={"Colors"} />
         </section>
     </PageLayout>
   )

@@ -7,14 +7,16 @@ import { Trash } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-export default function ProductForm() {
+export default function ProductForm({categories,}: {categories: Categories}) {
+    const [stoneTypes, shapes, colors] = categories;
+
     const form = useForm<ProductFormSchema>({
         resolver: zodResolver(productFormSchema),
         defaultValues: {
             name: "",
-            stone_type: "",
-            shape: "",
-            color: "",
+            stone_type_id: "",
+            shape_id: "",
+            color_id: "",
             origin: "",
             price: 0,
             discounted_price: 0,
@@ -207,10 +209,18 @@ export default function ProductForm() {
                         {/* when stone type are made into tags then convert it into options */}
                         <div className="flex flex-col gap-2 w-1/2">
                             <label className="font-semibold">Stone Type</label>
-                            <input type="text" {...form.register("stone_type")} />
+                            <select {...form.register("stone_type_id")}>
+                                <option value="">Select a stone type</option>
 
-                            {form.formState.errors.stone_type && (
-                                <p className='text-sm text-red-500'>{form.formState.errors.stone_type.message}</p>
+                                {
+                                    stoneTypes.map((stone) => (
+                                        <option key={stone.id} value={stone.id}>{stone.name}</option>
+                                    ))
+                                }
+                            </select>
+
+                            {form.formState.errors.stone_type_id && (
+                                <p className='text-sm text-red-500'>{form.formState.errors.stone_type_id.message}</p>
                             )}
                         </div>
 
@@ -220,19 +230,35 @@ export default function ProductForm() {
                         {/* when shapes are made into tags then convert it into options */}
                         <div className="flex flex-col gap-2 w-1/2">
                             <label className="font-semibold">Shape</label>
-                            <input type="text" {...form.register("shape")} />
+                            <select {...form.register("shape_id")}>
+                                <option value="">Select a shape</option>
 
-                            {form.formState.errors.shape && (
-                                <p className='text-sm text-red-500'>{form.formState.errors.shape.message}</p>
+                                {
+                                    shapes.map((shape) => (
+                                        <option key={shape.id} value={shape.id}>{shape.name}</option>
+                                    ))
+                                }
+                            </select>
+
+                            {form.formState.errors.shape_id && (
+                                <p className='text-sm text-red-500'>{form.formState.errors.shape_id.message}</p>
                             )}
                         </div>
 
                         <div className="flex flex-col gap-2 w-1/2">
                             <label className="font-semibold">Color</label>
-                            <input type="text" {...form.register("color")} />
+                            <select {...form.register("color_id")}>
+                                <option value="">Select a color</option>
 
-                            {form.formState.errors.color && (
-                                <p className='text-sm text-red-500'>{form.formState.errors.color.message}</p>
+                                {
+                                    colors.map((color) => (
+                                        <option key={color.id} value={color.id}>{color.name}</option>
+                                    ))
+                                }
+                            </select>
+
+                            {form.formState.errors.color_id && (
+                                <p className='text-sm text-red-500'>{form.formState.errors.color_id.message}</p>
                             )}
                         </div>
                     </div>
@@ -278,10 +304,9 @@ export default function ProductForm() {
                     </div>
 
                     {/* make it option of either true or false */}
-                    <div className="flex flex-col gap-2 w-1/2">
+                    <div className="flex gap-4 ">
                         <label className="font-semibold">Is Featured</label>
-                        {/* <input type="text" {...form.register("is_featured")} /> */}
-                        <input type="radio" {...form.register("is_featured")} />
+                        <input type="checkbox" {...form.register("is_featured")} />
                         {form.formState.errors.is_featured && (
                             <p className='text-sm text-red-500'>{form.formState.errors.is_featured.message}</p>
                         )}

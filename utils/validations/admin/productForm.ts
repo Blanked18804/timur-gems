@@ -2,9 +2,9 @@ import {z} from "zod";
 
 const productFormSchema = z.object({
   name: z.string().trim().min(1, "Product name is required"),
-  stone_type: z.string().trim().min(1, "Stone type is required"),
-  color: z.string().trim().min(1, "Color is required"),
-  shape: z.string().trim().min(1, "Shape is required"),
+  stone_type_id: z.string().trim().min(1, "Stone type is required"),
+  shape_id: z.string().trim().min(1, "Shape is required"),
+  color_id: z.string().trim().min(1, "Color is required"),
   origin: z.string().trim().nullable().optional(),
   price: z.coerce.number().positive("Price must be greater than 0"),
   discounted_price: z.coerce.number().min(0, "Discounted price cannot be negative").optional(),

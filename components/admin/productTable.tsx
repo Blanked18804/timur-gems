@@ -1,12 +1,12 @@
 import { ProductWithImages } from '@/sharedTableTypes'
-import { Edit, Trash } from 'lucide-react'
+import { DeleteIcon, Edit, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function ProductTable({products}: {products: ProductWithImages}) {
   return (
     <div className='w-full overflow-x-auto border border-border'>
-      <table className='w-full table-fixed text-sm'>
+      <table className='w-full text-sm'>
         <thead className='border-b border-border'>
           <tr className='text-left'>
             <th className="w-12 px-4 py-3">
@@ -15,6 +15,7 @@ export default function ProductTable({products}: {products: ProductWithImages}) 
             <th className="px-4 py-4 font-medium">Image</th>
             <th className="px-4 py-4 font-medium">Name</th>
             <th className="px-4 py-4 font-medium">Stone</th>
+            <th className="px-4 py-4 font-medium">Shape</th>
             <th className="px-4 py-4 font-medium">Color</th>
             <th className="px-4 py-4 font-medium">Price</th>
             <th className="px-4 py-4 font-medium">Discount</th>
@@ -36,8 +37,9 @@ export default function ProductTable({products}: {products: ProductWithImages}) 
                   </div>
                 </td>
                 <td className="px-4 py-4 font-medium">{product.name}</td>
-                <td className="px-4 py-4 text-muted-foreground">{product.stone_type}</td>
-                <td className="px-4 py-4">{product.color}</td>
+                <td className="px-4 py-4 text-muted-foreground">{product.stone_types?.name}</td>
+                <td className="px-4 py-4">{product.shapes?.name}</td>
+                <td className="px-4 py-4">{product.colors?.name}</td>
                 <td className="px-4 py-4">{product.price}</td>
                 <td className="px-4 py-4">{product.discounted_price ? `Rs. ${product.discounted_price}` : "-" }</td>
                 <td className="px-4 py-4">{product.stock_quantity}</td>

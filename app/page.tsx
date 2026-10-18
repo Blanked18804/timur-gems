@@ -1,24 +1,27 @@
 import PageLayout from "@/components/general/pageLayout";
 import ProductCards from "@/components/homepage/productCards";
+import StoneShowcase from "@/components/homepage/stoneShowcase";
 import { fetchProducts } from "@/utils/actions/products.action";
+import { ArrowRight, Subtitles } from "lucide-react";
 import Image from "next/image";
 
 export default async function Home() {
-  const allProducts = await fetchProducts();
+  // uncomment, commenting for ui dev so server dont get requests
+  // const allProducts = await fetchProducts();
 
-  if(allProducts){
-    console.log(`products are`);
-    console.log(allProducts);
-  }
-  else{
-    console.log("no products yet")
-  }
+  // if(allProducts){
+  //   console.log(`products are`);
+  //   console.log(allProducts);
+  // }
+  // else{
+  //   console.log("no products yet")
+  // }
 
   return (
     <PageLayout>
-      <main>
+      <main className="flex flex-col gap-64">
         {/* hero section */}
-        <section className="grid grid-cols-[35%_65%] min-h-[calc(100vh-64px)] gap-16">
+        <section className="grid grid-cols-[35%_65%] min-h-[calc(100vh-4rem)] gap-16">
           {/* left side */}
           <div className="pl-16 my-auto space-y-8">
             <div className="space-y-1">
@@ -35,15 +38,17 @@ export default async function Home() {
           </div>
 
           {/* right side */}
-          <div className="relative aspect-square">
+          <div className="relative">
             <Image src={"/assets/stone-hero.jpg"} fill loading="eager" alt="hero image" className="object-cover" />
           </div>
         </section>
 
         {/* featured products section */}
         <section className="px-16">
-          <ProductCards products={allProducts} />        
+          {/* <ProductCards products={allProducts} />         */}
         </section>
+
+        <StoneShowcase />
       </main>
     </PageLayout>
   );
